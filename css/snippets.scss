@@ -1,0 +1,100 @@
+@font-face {
+  // название шрифта(чтобы не запутаться лучше указать название папки со шрифтом)
+  font-family: "Lato";
+  // адрес шрифта и тип
+  src: url("../fonts/Lato-Regular.ttf") format("truetype");
+  font-style: normal;
+  font-weight: normal;
+}
+
+/* Указываем box sizing */
+*,
+*::before,
+*::after {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+/*Избавляемся от несоответствий отображения элементов верстки в разных браузерах */
+.clearfix:before,
+.clearfix:after {
+  content: " ";
+  display: table;
+}
+
+.clearfix:after {
+  clear: both;
+}
+
+/* IE6/7 support */
+.clearfix {
+  *zoom: 1;
+}
+
+/* Убираем внутренние отступы */
+ul[class],
+ol[class] {
+  padding: 0;
+}
+
+/* Убираем внешние отступы */
+body,
+h1,
+h2,
+h3,
+h4,
+p,
+ul[class],
+ol[class],
+li,
+figure,
+figcaption,
+blockquote,
+dl,
+dd {
+  margin: 0;
+}
+
+/* Выставляем основные настройки по-умолчанию для body */
+body {
+  min-height: 100vh;
+  scroll-behavior: smooth;
+  text-rendering: optimizeSpeed;
+  line-height: 1.5;
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: normal;
+}
+
+/* Удаляем стандартную стилизацию для всех ul и il, у которых есть атрибут class*/
+ul[class],
+ol[class],
+li,
+nav[class] {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+// Липкий футер
+#wrap {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+#main {
+  flex: auto;
+}
+
+#footer {
+  flex-shrink: 1;
+}

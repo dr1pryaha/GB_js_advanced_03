@@ -1,0 +1,141 @@
+@import url(./snippets.css);
+
+.header {
+  background: #222222;
+}
+
+.footer {
+  margin-top: 68px;
+  height: 50px;
+  background: #222222;
+}
+
+.btn-wrap {
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 50px;
+}
+
+.btn-cart {
+  background: #f16d7f;
+  border: 1px solid #f16d7f;
+  border-radius: 10%;
+  color: #ffffff;
+  font-size: 14px;
+  padding: 10px 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+
+  &:hover {
+    background: #ffffff;
+    border: 1px solid #f16d7f;
+    border-radius: 10%;
+    color: #f16d7f;
+  }
+}
+
+.products {
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  align-items: center;
+  width: 100%;
+  max-width: 1140px;
+  margin: 0 auto;
+  padding-left: 15px;
+  padding-right: 15px;
+  margin-top: 15px;
+
+  &-item {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+    margin-top: 45px;
+    border: solid 1px #222222;
+    border-radius: 5%;
+  }
+
+  &-image {
+    margin-top: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    width: 200px;
+    height: 170px;
+    object-fit: contain;
+  }
+
+  &-title {
+    margin-top: 15px;
+    color: #262626;
+    font-size: 15px;
+  }
+
+  &-price {
+    margin-top: 10px;
+    font-size: 30px;
+    line-height: 40px;
+    color: #262626;
+    font-weight: 700;
+    max-width: 100%;
+  }
+
+  &-buy-btn {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background: #ffffff;
+    border: 1px solid #f16d7f;
+    border-radius: 10%;
+    color: #f16d7f;
+    font-size: 14px;
+    padding: 10px 20px;
+    cursor: pointer;
+
+    &:hover {
+      background: #f16d7f;
+      border: 1px solid #f16d7f;
+      border-radius: 10%;
+      color: #ffffff;
+    }
+  }
+}
+
+.btn-wrap > ul {
+  padding: 15px;
+}
+
+.cart {
+  &-items {
+    position: absolute;
+    top: 60px;
+    border: 1px solid #000;
+    background-color: #ffffff;
+  }
+
+  &-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &-image {
+    width: 30px;
+    margin-right: 20px;
+  }
+
+  &-title {
+    margin-right: 20px;
+  }
+}
+
+.basketTotal {
+  font-weight: bold;
+  text-align: right;
+}
+
+.hidden {
+  display: none;
+}
