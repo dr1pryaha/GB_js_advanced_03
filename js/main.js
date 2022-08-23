@@ -1,21 +1,26 @@
+const API =
+  "https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses";
+
 class ProductList {
   constructor(container = ".products") {
     this.container = container;
     this.goods = [];
-    this._fetchProducts(); //рекомендация, чтобы метод был вызван в текущем классе
-    this.render(); //вывод товаров на страницу
+    // this._fetchProducts(); //рекомендация, чтобы метод был вызван в текущем классе
+    this.getProducts = this._getProducts().then(data => {
+      //data - объект js
+      this.goods = data;
+      //                 console.log(data);
+      this.render();
+    });
+    // this.render(); //вывод товаров на страницу
   }
-  _fetchProducts() {
-    this.goods = [
-      { id: 1, title: "Notebook", price: 2000, link: "img/notebook.jpg" },
-      { id: 2, title: "Mouse", price: 20, link: "img/mouse.jpg" },
-      { id: 3, title: "Keyboard", price: 200, link: "img/keyboard.jpg" },
-      { id: 4, title: "Gamepad", price: 50, link: "img/gamepad.jpg" },
-      { id: 5, title: "Headphones", price: 500, link: "img/headphones.jpg" },
-      { id: 6, title: "Monitor", price: 1500, link: "img/monitor.jpg" },
-      { id: 7, title: "Gamepad", price: 50, link: "img/gamepad.jpg" },
-      { id: 8, title: "Notebook", price: 2000, link: "img/notebook.jpg" },
-    ];
+
+  _getProducts() {
+    return fetch(`${API}/catalogData.json`)
+      .then(result => result.json())
+      .catch(error => {
+        console.log(error);
+      });
   }
 
   render() {
@@ -29,14 +34,14 @@ class ProductList {
 }
 
 class ProductItem {
-  constructor(product) {
-    this.title = product.title;
+  constructor(product, img = "https://via.placeholder.com/200x150") {
+    this.title = product.product_name;
     this.id = product.id;
     this.price = product.price;
-    this.link = product.link;
+    this.link = img;
   }
   render() {
-    return `<div class="products-item">
+    return `<div class="products-item data-id="${this.id}">
            <img class="products-image" src="${this.link}" alt="product">
            <h3 class="products-title">${this.title}</h3>
            <p class="products-price">${this.price}</p>
@@ -48,24 +53,26 @@ class ProductItem {
 let list = new ProductList();
 
 class BasketList extends ProductList {
-  // constructor(container = ".cart-items") {
-  //   this.container = container;
-  //   this.goods = [];
-  //   this._fetchProducts(); //рекомендация, чтобы метод был вызван в текущем классе
-  //   this.render(); //вывод товаров на страницу
-  // }
+  constructor(container = ".cart-items") {
+    super((container = ".cart-items"));
+    this.getProducts.then(() => {
+      this.getTotalValue = this.getTotalValue();
+      document.querySelector(".basketTotalValue").textContent =
+        this.getTotalValue;
+    });
+  }
 
-  _fetchProducts() {
-    this.goods = [
-      { id: 1, title: "Notebook", price: 2000, link: "img/notebook.jpg" },
-      { id: 2, title: "Mouse", price: 20, link: "img/mouse.jpg" },
-      { id: 3, title: "Keyboard", price: 200, link: "img/keyboard.jpg" },
-    ];
+  _getProducts() {
+    return fetch(`${API}/getBasket.json`)
+      .then(result => result.json())
+      .catch(error => {
+        console.log(error);
+      });
   }
 
   render() {
     const block = document.querySelector(".cart-items");
-    for (let product of this.goods) {
+    for (let product of this.goods.contents) {
       const item = new BasketItem(product);
       block.insertAdjacentHTML("afterbegin", item.render());
       //              block.innerHTML += item.render();
@@ -73,7 +80,7 @@ class BasketList extends ProductList {
   }
 
   getTotalValue() {
-    let res = this.goods.reduce((acc, item) => acc + item.price, 0);
+    let res = this.goods.contents.reduce((acc, item) => acc + item.price, 0);
     return res;
   }
 
@@ -83,15 +90,8 @@ class BasketList extends ProductList {
 }
 
 class BasketItem extends ProductItem {
-  // constructor(product) {
-  //   this.title = product.title;
-  //   this.id = product.id;
-  //   this.price = product.price;
-  //   this.link = product.link;
-  //   //this.count();
-  // }
   render() {
-    return `<li class="cart-item">
+    return `<li class="cart-item data-id="${this.id}">
            <img class="cart-image" src="${this.link}" alt="product">
            <h3 class="cart-title">${this.title}</h3>
            <p class="cart-price">${this.price}</p>
@@ -101,12 +101,12 @@ class BasketItem extends ProductItem {
 }
 
 let listBasket = new BasketList();
-let totalValue = +listBasket.getTotalValue();
+console.log(listBasket);
+console.log(list);
+listBasket._getProducts();
 
 document.querySelector(".btn-cart").addEventListener("click", event => {
   if (event.currentTarget.classList.contains("btn-cart")) {
     document.querySelector(".cart-items").classList.toggle("hidden");
   }
 });
-
-document.querySelector(".basketTotalValue").textContent = totalValue;
