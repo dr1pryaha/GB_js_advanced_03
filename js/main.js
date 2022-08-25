@@ -60,6 +60,7 @@ class BasketList extends ProductList {
       document.querySelector(".basketTotalValue").textContent =
         this.getTotalValue;
     });
+    this.clickBasket();
   }
 
   _getProducts() {
@@ -84,6 +85,14 @@ class BasketList extends ProductList {
     return res;
   }
 
+  clickBasket() {
+    document.querySelector(".btn-cart").addEventListener("click", event => {
+      if (event.currentTarget.classList.contains("btn-cart")) {
+        document.querySelector(".cart-items").classList.toggle("hidden");
+      }
+    });
+  }
+
   addGood() {}
   removeGood() {}
   changeGood() {}
@@ -100,13 +109,4 @@ class BasketItem extends ProductItem {
   }
 }
 
-let listBasket = new BasketList();
-console.log(listBasket);
-console.log(list);
-listBasket._getProducts();
-
-document.querySelector(".btn-cart").addEventListener("click", event => {
-  if (event.currentTarget.classList.contains("btn-cart")) {
-    document.querySelector(".cart-items").classList.toggle("hidden");
-  }
-});
+new BasketList();
